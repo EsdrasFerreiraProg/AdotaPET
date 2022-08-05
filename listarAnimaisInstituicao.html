@@ -13,6 +13,8 @@
         <label class="label" for="animais">Selecione o animal da lista</label>
         
         <select onchange="update()" class="select-nao-adotados" id="animais-sem-dono">
+          <label class="label" for="animais">Digite o nome do animal</label>
+        
 
           <script>
 
@@ -100,20 +102,57 @@
           }
 
         </script>
-        <input type="submit" value="Deletar animal">
-
+        
+        <button class="button-delete" type="button" value="Deletar animal"></button>
+        <input id="envia-o-texto" name="nome" value="" class="envia-o-texto" type="text">
         <div class="mostrar-animal-nao-adotado" id="mostrar-animal-nao-adotado">
 
         </div>
-        <input id="envia-o-texto" name="nome" value="" class="envia-o-texto" type="text">
+        
       </form>
       <form action="/logout" method="GET">
         <a class = "logout" href = "/logout">Logout</a>
       </form>
       
-      <a href="/cadastro-pet" class="text"><strong>Clique aqui para cadastrar um animal novo </strong></section></body></html>
-      
+      <a href="/cadastro-pet" class="text"><strong>Clique aqui para cadastrar um animal novo</strong></a>
         
+    </section>
+    <section class="delete-section">
+          <div class="delete-section-div"> 
+            <input id="delete-section-input"class="delete-section-input"placeholder="Digite o selecionado para deletar"type="text"></input>
+            <button onclick="ensureFieldIsEqualToSelectedItem()"class="delete-section-button1">Deletar</button>
+          </div>
+          <br>
+          <div id = "incorrect-field" class="incorrect-field">
+            <script>
+              function ensureFieldIsEqualToSelectedItem(){
+                let valorSelecionado = document.getElementById("envia-o-texto").value;
+                let valorDigitado = document.getElementById("delete-section-input").value;
+                let container = document.getElementById("incorrect-field");
+                console.log(valorSelecionado)
+                if (valorDigitado != valorSelecionado && valorSelecionado != ""){
+                  window.alert("Digite o nome igual ao selecionado");
+                }else{
+                  fetch("/deleta-animal-instituicao", {
+                  method: "POST",
+                  headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                  },
+
+                  body: JSON.stringify({
+
+                    nome: valorSelecionado
+                    
+                  })
+
+                  }).then(window.alert("Animal deletado com sucesso!"))
+                  .then(window.location.reload())
+                  .catch(err=>console.log(err))
+                }
+              }
+            </script>
+          </div>
     </section>
 </body>
 </html>

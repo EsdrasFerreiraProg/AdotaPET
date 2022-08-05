@@ -12,36 +12,42 @@
 </head>
 
 <body>
+    <div class="topnav">
+        <a class="active" href="/login">Login</a>
+        <a href="/cadastro-instituicao">Cadastro PJ</a>
+        <a href="/cadastro-usuario">Cadastro PF</a>
+        <a href="https://github.com/EsdrasFerreiraProg">Github</a>
+        <h3 class="h3-navbar"><strong>AdotaPET</strong></h3>
+    </div>
+      
 
-<div class="box-1">
-    <h1 class="title">AdotaPET</h1>
-</div>
-
+    <div class="text-welcome">
+        <h2 class="welcome-h2">Bem-vindo!</h2>
+        <h3 class="welcome-h3">Faça login abaixo</h3>
+    </div>
 <form action="/login" method="POST" class="container">
 
     <div class="inputBox">
-        <input name="usuario"placeholder="Usuario" name="user" id="user" type="text" class="inputUser">
-        
+        <input name="usuario"placeholder="Usuario" name="user" id="user" type="text" class="inputUser"><br>
+        <input name="senha" placeholder="Senha" name="password" id="password" type="password" class="inputUser">
     </div>
 
     <br></br>
-
-    <div class="inputBox">
-        <input name="senha" placeholder="Senha" name="password" id="password" type="password" class="inputUser">
-        
-    </div>
     
     <div class="line-1"></div>
-
+    
     <button class="login">Login</button>
-
+    
+    <div class="sign-up-button">
+        <h4 class="no-account">Ainda não tem uma conta?</h4>
+         <a href="/cadastro-instituicao">Sign Up</a>
+    </div>
+    <div class="password-forget">
+        <a href="/forget-password">Esqueceu a senha? Clique aqui!</a>
+    </div>
 </form>
 
-<h4 class="no-account">Ainda não tem uma conta?</h4>
-<div class="sign-up-button">
 
-    <a href="/cadastro-instituicao">Sign Up</a>
-</div>
 
 </body>
 

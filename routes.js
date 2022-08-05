@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
+const nodemailer = require('nodemailer');
 const db = require('./mysqlconnection');
+const user = "pass.recover@adotapet.com";
+const pass = ")q?7XAs9A*@Y";
+var crypto = require("crypto");
+const bcrypt = require('bcryptjs');
 
 router.get("/css/styles.css", (req, res)=>{
     
@@ -290,6 +295,49 @@ router.post("/deleta-animal-instituicao", async (req,res)=>{
     
     res.send(`res.send(<script>window.alert("${req.body.nome} DELETADO COM SUCESSO!")</script><script>
     window.location.href = '/pagina-instituicao';</script>)`);
+})
+
+router.get("/forget-password", (req, res)=>{
+    res.sendFile(__dirname + '/esqueceuASenha.html');
+})
+router.post("/forget-password", async (req, res)=>{
+    
+    const email = req.body.email;
+    var senha = crypto.randomBytes(5).toString('hex');
+    console.log(senha);
+    let hashedPassword = await bcrypt.hash(senha, 2);
+
+    db.query(`UPDATE usuarios SET senha='${hashedPassword}' WHERE email= '${email}'`, (err,response)=>{
+        if (response.affectedRows == 0)
+            res.send({sucesso: "false", mensagem: "E-mail não existe!", codigo: "1"});
+
+        else
+            res.send({sucesso: "true", mensagem: "Senha alterada com sucesso", codigo: "2"});
+    })
+    
+    const transporter = nodemailer.createTransport({
+        name : "pass-recover",
+        sendMail: true,
+        host: "smtp.umbler.com",
+        port: 587,
+        auth:{user, pass}    
+    })
+
+    transporter.sendMail({
+        from: user,
+        to: email,
+        replyTo: user,
+        subject: "Aqui está sua senha nova",
+        text: senha
+        
+    }).then(info=>{
+        console.log(info);
+    }).catch(err=>{
+        console.log("erro!")
+        console.log(err);
+    })
+
+    
 })
 
 router.get('/deleta-animal-instituicao', (req,res)=>{

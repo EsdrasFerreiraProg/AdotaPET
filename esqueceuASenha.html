@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            background-color: rgb(235, 230, 230);
+        }
+        .form{
+            display:flex;
+            border: 1px solid gray;
+            justify-content: center;
+            border-radius: 5px;
+            margin-top: 0%; 
+            margin-left: 30%;
+            margin-right: 30%;
+            background-color: white;
+               
+        }
+
+        .box{
+            margin: 5% 0% 5% 0%;
+            display: flex;
+            flex-direction: column;
+            
+        }
+        .submit{
+            margin-top: 10%;
+            padding:5%;
+            background-color: blue;
+            border: white;
+            border-radius: 3px;
+            color: white;
+            font-size: 16px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .submit:hover{
+            background-color: green;
+        }
+
+        .input{
+            margin-left: -50%;
+            width: 190%;
+            padding:5%;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+        .text{
+            margin: 10% 0% 0% 2%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .h3{
+            margin-top: -1%;
+            color: rgb(110, 100, 100);
+        }
+
+        .div-green{
+            background-color:green;
+            border: solid 1px black;
+            justify-content: center;
+            color: white;
+            margin-top: 2%;
+        }
+        .div-red{
+            background-color:red;
+            display: flex;
+            border: solid 1px black;
+            justify-content: center;
+            align-content: center;
+            margin-top: 2%;
+            color: white;
+        }
+
+        
+    </style>
+    <title>Esqueceu a senha</title>
+</head>
+<body class="body">
+
+    <div class="text">
+        <h1 class="h1">Redefina sua senha</h1>
+        <h3 class="h3">Entre seu e-mail para redefinir</h3>
+    </div>
+
+    <section class="form" method="POST" action="#changepass">
+        
+        <section class="box">
+            <input id="email"class="input"name="email"type="text" placeholder="Digite aqui seu e-mail para recuperação da senha">
+            <div id="hover-password">
+
+            </div>
+            <button onclick="changePassword()" class="submit">Enviar
+
+            <script>
+                function changeDiv(accept){
+                    let container = document.getElementById("hover-password");
+
+                    if (accept == "true"){
+                        container.innerHTML = "<div class='div-green'>Senha alterada com sucesso!</div>";
+                        setTimeout(window.alert("Sua senha foi enviada para o email selecionado!"), 5000);
+
+                    }else{
+                        container.innerHTML = "<div class='div-red'>Email inválido!</div>";
+                    }
+                }
+
+                async function changePassword(){
+                    
+                    let email = document.getElementById("email").value;
+                    
+                    const promise = await new Promise((resolve)=>{
+                  
+                    fetch("/forget-password", {
+                    method: "POST",
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+
+                    body: JSON.stringify({
+
+                        email:email
+                        
+                        })
+
+                    })
+                    .then(response => response.json()
+                    .then(data=>resolve(data))
+                    ); 
+                })
+                console.log(promise);
+                changeDiv(promise.sucesso);
+            }
+            </script>
+        </section>
+
+    </section>
+</body>
+</html>

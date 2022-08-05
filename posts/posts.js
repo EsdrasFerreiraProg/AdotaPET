@@ -32,7 +32,7 @@ router.post('/form-cadastro-usuario', async (req,res)=>{
         }
     });
 
-    db.query("INSERT INTO usuarios SET ?", {usuario: rg, senha: hashedPassword});
+    db.query("INSERT INTO usuarios SET ?", {usuario: rg, senha: hashedPassword, email:contato});
 
     res.send("<a href='/'>Obrigado por se cadastrar! Clique aqui para voltar ao login</a>")
 });
@@ -50,7 +50,7 @@ router.post('/form-cadastro-instituicao', async (req,res)=>{
         }
     });
 
-    db.query("INSERT INTO usuarios SET?", {usuario: cnpj, senha: hashedPassword});
+    db.query("INSERT INTO usuarios SET?", {usuario: cnpj, senha: hashedPassword, email:contato});
 
     res.send("<a href='/'>Obrigado por se cadastrar! Clique aqui para voltar ao login</a>");
 });
